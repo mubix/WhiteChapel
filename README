@@ -6,11 +6,13 @@ This project will hopefully be a very modular front
 end to cracking passwords. The idea is you tell it a tool
 to use and how to use it, and what to expect in results.
 The the overlying framework should swallow that up
-and allow you to upload / crack and manaage password,
-hash, and dictionary collections. Allowing you to
+and allow you to upload / crack and manage passwords,
+hashs, and dictionary collections. Allowing you to
 look back historically at what was cracked, and with
 what tool, resend a group through the engines again
-have as many engines as you want etc...
+have as many engines as you want etc... Giving you
+more time to concentrate on using the passwords instead
+of figuring out the tools to break them.
 
 If I can keep the idea as scalable as possible, I
 think it would fit really well plugged into any
