@@ -1,0 +1,20 @@
+It's all kinds of fun using a ton of different tools
+to crack passwords, and then having to sort and go through
+and maintain or delete them... right?
+
+This project will hopefully be a very modular front
+end to cracking passwords. The idea is you tell it a tool
+to use and how to use it, and what to expect in results.
+The the overlying framework should swallow that up
+and allow you to upload / crack and manaage password,
+hash, and dictionary collections. Allowing you to
+look back historically at what was cracked, and with
+what tool, resend a group through the engines again
+have as many engines as you want etc...
+
+If I can keep the idea as scalable as possible, I
+think it would fit really well plugged into any
+pentester/red teamer/ or firm's toolkit
+
+::crossed fingers::
+
