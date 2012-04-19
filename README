@@ -1,3 +1,11 @@
+Installation::
+   gem install sinatra haml
+
+Execution::
+   ruby app.rb
+
+Notes::
+
 It's all kinds of fun using a ton of different tools
 to crack passwords, and then having to sort and go through
 and maintain or delete them... right?
