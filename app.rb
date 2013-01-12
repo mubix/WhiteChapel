@@ -2,47 +2,30 @@
 require	'rubygems'
 require 'sinatra'
 require 'haml'
+require 'tire'
+require 'rex'
+
+helpers do
+	Tire.configure do
+		#elasurl = File.read('elastic.conf') {|f| f.readline}
+		elasurl = File.open("elastic.conf").first
+		url("#{elasurl.chomp}/")
+		#url 'http://192.168.92.100:9200/'
+	end
+
+	Tire.index 'connectivitytest' do
+		delete
+		create
+		store :title => 'One',   :tags => ['ruby'],           :published_on => '2011-01-01'
+		store :title => 'Two',   :tags => ['ruby', 'python'], :published_on => '2011-01-02'
+		delete
+	end
+end
 
 get '/' do
-	haml :header
-end
-
-get '/add_hash/:type/*' do
-	# process hash for processing
-end
-
-get '/upload_dump/' do
-	haml :upload_dump
-end
-
-post '/upload_dump/' do
-	unless params[:file] && (tmpfile = params[:file][:tempfile]) && (name = params[:file][:filename])
-		@error = "No file selected"
-		return haml :upload_dump
-	end
-	STDERR.puts "Uploading file, original name #{name.inspect}"
-	while blk = tmpfile.read(65536)
-		blk.each do |line|
-=begin
-#RUN PARSER
-#TOSS "GOOD" hashes to DB
-#SEPARATE WINDOWS QUE
-			
-=end
-		end
-	end
-	"Upload Complete"
+	#haml :header
+	erb :search
 end
 
 
-=begin
-	parserfile = File.open('johnfile.txt','w')
-	parserfile << line
-	parserfile.close
-	test = %x[/Users/mubix/Desktop/imgs/tools/john/john ./johnfile.txt --show=LEFT --format=NT]
-	if test == ""
-		puts 'No NT Hash Found'
-	else
-		puts test 
-	end
-=end
+# john ./johnfile.txt --show=LEFT --format=NT
