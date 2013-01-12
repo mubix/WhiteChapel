@@ -1,178 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>White Chapel Password Audit Suite</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
-  <style>
-    body
-      { color: #222; background: #fff;
-        font-size: 76%;
-        font-family: Helvetica, sans-serif;
-        padding: 2em 6em; }
-    a { color: #2f3b4c; text-decoration: none !important; }
-    h1
-      { color: #999;
-        font-size: 120%;
-        padding: 0.5em 0.8em 0 0;
-        margin: 0;
-        float: left;
-        position: relative; }
-    h1 a { color: #999; }
-
-    #search-form
-      { border-bottom: 2px solid #ccc;
-        padding: 0.5em 0 0.5em 0;
-        clear: both; }
-    #search-form input[type='text']
-      { color: #222;
-        font-size: 110%;
-        padding: 0.25em;
-        width: 50em; }
-    #search-form #tools
-      { color: #34383e;
-        margin: 0 0 0 11.6em; }
-    #search-form #tools a
-      { color: #2f3b4c; text-decoration: underline !important; }
-    #search-form #tools .dim
-      { color: #878787; }
-
-    #toggle-tips
-      { font-size: 10px;
-        font-weight: normal;
-        text-decoration: underline !important;
-        position: absolute;
-        top: 0 bottom: 0; }
-    #search-form #tips
-      { background-color: #eff0f1;
-        padding: 1em 2em;
-        margin: 0 0 0 11.6em;
-        position: relative;
-        -moz-border-radius: 0.5em;
-        -webkit-border-radius: 0.5em;
-        border-radius: 0.5em; }
-    #search-form #tips p
-      { padding: 0.5em 0 0.5em 0;
-        margin: 0;  }
-    #search-form #tips a
-      { background: #B9D4FA;
-        padding: 0.25em 0.5em 0.1em 0.5em;
-        -moz-border-radius: 0.25em;
-        -webkit-border-radius: 0.25em;
-        border-radius: 0.25em;  }
-    #search-form #tips a:hover
-      { color: #dde4ed;
-        background: #444e5d; }
-
-    #search-form #tips span
-      { color: #878787;
-        font-size: 95%;
-        margin-left: 1em; }
-
-    .message
-      { line-height: 125%;
-        padding: 1em 0;
-        border-bottom: 1px solid #ccc;
-        position: relative; }
-    .message p
-      { margin: 0 0 0.5em 0; }
-    .message .from
-      { color: #34383e;
-        font-weight: bold;
-        float: left; }
-    .message .from small
-      { color: #5f646b;
-        font-weight: normal; }
-    .message .date
-      { color: #5976a1;
-        float: right; }
-    .message .subject
-      { color: #34383e;
-        clear: both; }
-    .message .body
-      { color: #87858f;
-        font-size: 95%;
-        height: 1.25em;
-        overflow: hidden; }
-    .message .body p
-      { display: inline; }
-    .message.expanded .body
-      { height: auto; }
-    .message.expanded .body p
-      { display: block; }
-    .message:hover
-      { background: #f5f5f8; }
-
-    .highlight {
-      font-size: normal;
-      background-color: #fef4c1;
-      padding: 0.25em 0.25em;
-      -moz-border-radius: 0.25em;
-      -webkit-border-radius: 0.25em;
-      border-radius: 0.25em;
-    }
-  </style>
-  <script>
-  $(function() {
-    $('#tips').hide();
-    $('.message .body').
-      hover(function() { $(this).css({ cursor : 'pointer' }); }).
-      click(function() { $(this).parent().toggleClass('expanded'); return false; });
-    $('#toggle-tips').
-      click(function() { $('#tips').toggle('fast'); return false; });
-  });
-  </script>
+	<title>White Chapel Password Audit Suite</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
+
 <body>
 
 <div id="search-form">
-  <h1>
-    <a href="/">Search for passwords or hashes</a><br>
-    <a id="toggle-tips" href="#">Toggle tips</a>
-  </h1>
-  <form action="/" method="get" accept-charset="utf-8">
-    <input type="hidden" name="s" value="<%= params[:s] %>">
-    <input type="text" name="q" value="<%= params[:q] %>">
-    <input type="submit" value="Search">
-  </form>
-
-  <div id="tools">
-    <p>
-      <span class="dim">Sort by:</span>
-      <span class="dim">. Showing <%= @s.results.size %> of <%= @s.results.total %> total results.</span>
-    </p>
-  </div>
-
-  <div id="tips">
-    <%= link_to_tip('git*', 'Messages beginning with “git”') %>
-    <%= link_to_tip('from:github.com', 'Messages from Github') %>
-    <%= link_to_tip('apple OR linux^100', 'Messages about Apple or Linux, with a boost for Linux') %>
-    <%= link_to_tip("date:[#{(Time.now-7*24*60*60).strftime('%Y-%m-%d')} TO #{Time.now.strftime('%Y-%m-%d')}]", 'Messages from last week') %>
-  </div>
+	<h1>
+		<a href="/">Search for passwords or hashes</a><br>
+	</h1>
+	<form action="/" method="get" accept-charset="utf-8">
+		<input type="hidden" name="s" value="<%= params[:s] %>">
+		<input type="text" name="q" value="<%= params[:q] %>">
+		<input type="submit" value="Search">
+	</form>
 </div>
 
 <% @s.results.each do |m| %>
-  <div class="message">
-    <p class="from">
-      <%= m.from %>
-      <% if m._score && m._score != 1.0 %>
-        <small title="score"><%= m._score.inspect %></small>
-      <% end %>
-    </p>
-    <p class="date"><%= Time.parse(m.date).strftime('%Y/%m/%d %H:%M') %></p>
-    <% body    = (m.highlight && m.highlight.body) ? m.highlight.body.first : m.body %>
-    <% subject = (m.highlight && m.highlight.subject) ? m.highlight.subject.first : m.subject  %>
-    <p class="subject"><%= subject %></p>
-    <div class="body"><%= simple_format(body) %></div>
-  </div>
+	<div class="message">
+		<p class="from"> <%= m.from %>
+			<% if m._score && m._score != 1.0 %>
+				<small title="score"><%= m._score.inspect %></small>
+			<% end %>
+		</p>
+
+		<% body    = (m.highlight && m.highlight.body) ? m.highlight.body.first : m.body %>
+		<% subject = (m.highlight && m.highlight.subject) ? m.highlight.subject.first : m.subject  %>
+
+		<p class="subject"><%= subject %></p>
+		<div class="body"><%= simple_format(body) %></div>
+	</div>
 <% end %>
 
 <% if @s.results.total > (params[:p].to_i+1)*settings.per_page %>
-<p><a href="/?q=<%= params[:q] %>&amp;s=<%= params[:s] %>&amp;p=<%= params[:p].to_i+1 %>">Next &raquo;</a></p>
+	<p>
+		<a href="/?q=<%= params[:q] %>&amp;s=<%= params[:s] %>&amp;p=<%= params[:p].to_i+1 %>">Next &raquo;</a>
+	</p>
 <% end %>
 
 <% if @s.results.empty? %>
-  <p>No results.</p>
+	<p>No results.</p>
 <% end %>
 
 </body>

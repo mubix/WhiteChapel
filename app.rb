@@ -7,10 +7,8 @@ require 'rex'
 
 helpers do
 	Tire.configure do
-		#elasurl = File.read('elastic.conf') {|f| f.readline}
 		elasurl = File.open("elastic.conf").first
 		url("#{elasurl.chomp}/")
-		#url 'http://192.168.92.100:9200/'
 	end
 
 	Tire.index 'connectivitytest' do
