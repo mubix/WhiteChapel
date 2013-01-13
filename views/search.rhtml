@@ -17,22 +17,22 @@
 		<input type="submit" value="Search">
 	</form>
 </div>
-
-<% @s.results.each do |m| %>
-	<div class="message">
-		<p class="from"> <%= m.from %>
-			<% if m._score && m._score != 1.0 %>
-				<small title="score"><%= m._score.inspect %></small>
-			<% end %>
-		</p>
-
-		<% body    = (m.highlight && m.highlight.body) ? m.highlight.body.first : m.body %>
-		<% subject = (m.highlight && m.highlight.subject) ? m.highlight.subject.first : m.subject  %>
-
-		<p class="subject"><%= subject %></p>
-		<div class="body"><%= simple_format(body) %></div>
-	</div>
+<br>
+<br>
+<table border=1>
+	<tr>
+		<th>TYPE</th>
+		<th>PASSWORD</th>
+		<th>HASH</th>
+	</tr>
+	<% @s.results.each do |m| %>
+	<tr>
+		<td><%= m['type'] %></td>
+		<td><%= m['password'] %></td>
+		<td><%= m['hash'] %></td>
+	</tr>
 <% end %>
+</table>
 
 <% if @s.results.total > (params[:p].to_i+1)*settings.per_page %>
 	<p>
