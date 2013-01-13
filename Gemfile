@@ -2,8 +2,6 @@ source "https://rubygems.org"
 
 # Base packages
 gem "sinatra"
-gem "haml"
-
 
 # Elastic Search interface
 gem "tire"
