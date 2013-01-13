@@ -19,32 +19,3 @@
 		</div>
 	</form>
 </div>
-<br>
-<br>
-<table class="table table-condensed">
-	<tr>
-		<th>TYPE</th>
-		<th>PASSWORD</th>
-		<th>HASH</th>
-	</tr>
-	<% @s.results.each do |m| %>
-	<tr>
-		<td><%= m['type'] %></td>
-		<td><%= m['password'] %></td>
-		<td><%= m['hash'] %></td>
-	</tr>
-<% end %>
-</table>
-
-<% if @s.results.total > (params[:p].to_i+1)*settings.per_page %>
-	<p>
-		<a href="/?q=<%= params[:q] %>&amp;s=<%= params[:s] %>&amp;p=<%= params[:p].to_i+1 %>">Next &raquo;</a>
-	</p>
-<% end %>
-
-<% if @s.results.empty? %>
-	<p>No results.</p>
-<% end %>
-
-</body>
-</html>

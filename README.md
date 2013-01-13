@@ -1,8 +1,32 @@
-Installation::
-   gem install sinatra haml
+# White Chapel Password Auditing Framework
 
-Execution::
-   ruby app.rb
+This project is meant to be run internally, since I haven't
+really seen any open source projects that do all the things
+I think a password auditing framework should do I'm creating
+my own. Here are the features that I intend to have:
+(Please feel free to create bug reports or feature requests
+outside of the items stipulated here)
+
+1) Search for hashes quickly
+2) Upload password dumps for cracking hashes
+3) Upload hash lists for cracking
+4) Generate hash tables for all popular hash types based on
+searched password, uploaded dictionaries, and cracked hashes
+
+
+## Installation::
+
+* git clone https://github.com/mubix/WhiteChapel.git
+* cd WhiteChapel
+* bundle install
+
+## Execution::
+
+* ruby app.rb
+
+Todo List::
+
+* See the file: todo.list or Github issues
 
 Notes::
 

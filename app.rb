@@ -37,7 +37,7 @@ end
 get '/' do
 	# puts @s.to_curl
 
-	erb :search
+	erb :index
 end
 
 get '/search/pass' do
@@ -65,6 +65,38 @@ get '/search/hash' do
 
 	erb :search
 end
+
+# Handle GET-request (Show the upload form)
+get "/upload" do
+  erb :upload
+end
+
+post "/upload/dictionary" do
+  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+    f.write(params['myfile'][:tempfile].read)
+  end
+  return "The file was successfully uploaded!"
+end
+
+# Handle POST-request (Receive and save the uploaded file)
+post "/upload/pwdump" do
+  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+    f.write(params['myfile'][:tempfile].read)
+  end
+  return "The file was successfully uploaded!"
+end
+
+post "/upload/shadowfile" do
+  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+    f.write(params['myfile'][:tempfile].read)
+  end
+  return "The file was successfully uploaded!"
+end
+
+
+
+
+
 
 
 # john ./johnfile.txt --show=LEFT --format=NT
