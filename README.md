@@ -7,10 +7,10 @@ my own. Here are the features that I intend to have:
 (Please feel free to create bug reports or feature requests
 outside of the items stipulated here)
 
-1) Search for hashes quickly
-2) Upload password dumps for cracking hashes
-3) Upload hash lists for cracking
-4) Generate hash tables for all popular hash types based on
+1. Search for hashes quickly
+2. Upload password dumps for cracking hashes
+3. Upload hash lists for cracking
+4. Generate hash tables for all popular hash types based on
 searched password, uploaded dictionaries, and cracked hashes
 
 
@@ -24,11 +24,11 @@ searched password, uploaded dictionaries, and cracked hashes
 
 * ruby app.rb
 
-Todo List::
+## Todo List::
 
 * See the file: todo.list or Github issues
 
-Notes::
+## Notes::
 
 It's all kinds of fun using a ton of different tools
 to crack passwords, and then having to sort and go through
