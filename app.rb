@@ -6,7 +6,8 @@ require 'tire'
 require 'rex'
 
 configure do
-  set :per_page, 25
+	set :public_folder, Proc.new { File.join(root, "static") }
+	set :per_page, 25
 end
 
 
