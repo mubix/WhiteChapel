@@ -6,7 +6,7 @@
 	<form action="/search/pass" method="get" accept-charset="utf-8" class="form-search">
 		<div class="input-append">
 			<input type="hidden" name="s" value="<%= params[:s] %>">
-			<input type="text" placeholder="password" class="span2 input-large search-query" name="q" value="<%= params[:q] %>">
+			<input type="text" placeholder="password" class="span4 search-query" name="q" value="<%= params[:q] %>">
 			<button type="submit" class="btn">Search</button>
 		</div>
 	</form>
@@ -14,7 +14,7 @@
 	<form action="/search/hash" method="get" accept-charset="utf-8" class="form-search">
 		<div class="input-append">
 			<input type="hidden" name="s" value="<%= params[:s] %>">
-			<input type="text" placeholder="aad3b435b51404eeaad3b435b51404ee" class="span2 input-large search-query" name="h" value="<%= params[:h] %>">
+			<input type="text" placeholder="aad3b435b51404eeaad3b435b51404ee" class="span4 search-query" name="h" value="<%= params[:h] %>">
 			<button type="submit" class="btn">Search</button>
 		</div>
 	</form>
