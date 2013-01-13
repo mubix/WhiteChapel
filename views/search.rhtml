@@ -1,25 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>White Chapel Password Audit Suite</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-
-<body>
-
 <div id="search-form">
 	<h1>
-		<a href="/">Search for passwords or hashes</a><br>
+		<a href="/">Search</a><br>
 	</h1>
-	<form action="/" method="get" accept-charset="utf-8">
+	Passwords:
+	<form action="/search/pass" method="get" accept-charset="utf-8" class="form-search">
 		<input type="hidden" name="s" value="<%= params[:s] %>">
-		<input type="text" name="q" value="<%= params[:q] %>">
-		<input type="submit" value="Search">
+		<input type="text" class="input-large search-query" name="q" value="<%= params[:q] %>">
+		<button type="submit" class="btn">Search</button>
+	</form>
+	Hashes:
+	<form action="/search/hash" method="get" accept-charset="utf-8" class="form-search">
+		<input type="hidden" name="s" value="<%= params[:s] %>">
+		<input type="text" class="input-large search-query" name="h" value="<%= params[:h] %>">
+		<button type="submit" class="btn">Search</button>
 	</form>
 </div>
 <br>
 <br>
-<table border=1>
+<table class="table table-condensed">
 	<tr>
 		<th>TYPE</th>
 		<th>PASSWORD</th>

@@ -26,6 +26,8 @@ helpers do
 	end
 
 	Tire.index 'whitechapel-hashes' do
+		# REMOVE THIS DELETE
+		delete
 		create
 		store :password => 'hello world', :hash => '5eb63bbbe01eeed093cb22bb8f5acdc3', :type => 'md5'
 		store :password => 'password', :hash => '5f4dcc3b5aa765d61d8327deb882cf99', :type => 'md5'
@@ -33,17 +35,33 @@ helpers do
 end
 
 get '/' do
+	# puts @s.to_curl
 
+	erb :search
+end
+
+get '/search/pass' do
 	q = params[:q].to_s !~ /\S/ ? '*' : params[:q].to_s
 	f = params[:p].to_i*settings.per_page
 
 	@s = Tire.search( 'whitechapel-hashes' ) do |search|
-		search.query { |query| query.string q }
+		search.query { |query| query.string "password:#{q}" }
 		search.size settings.per_page
 		search.from f
 	end
 
-	# puts @s.to_curl
+	erb :search
+end
+
+get '/search/hash' do
+	h = params[:h].to_s !~ /\S/ ? '*' : params[:h].to_s
+	f = params[:p].to_i*settings.per_page
+
+	@s = Tire.search( 'whitechapel-hashes' ) do |search|
+		search.query { |query| query.string "hash:#{h}" }
+		search.size settings.per_page
+		search.from f
+	end
 
 	erb :search
 end
