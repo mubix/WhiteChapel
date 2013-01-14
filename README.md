@@ -55,3 +55,9 @@ pentester/red teamer/ or firm's toolkit
 Also, I picked the name based on where Jack the Ripper
 was performing his murders... seems a bit dark now
 that I think about it, but oh well...
+
+## I don't know what to call this section yet
+
+*
+* https://github.com/shurizzle/ruby-fifo
+** For the FIFO ruby GEM
