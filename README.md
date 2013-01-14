@@ -61,6 +61,7 @@ that I think about it, but oh well...
 * Twitter Bootstrap
   * For the prettifying of the interface
   * http://twitter.github.com/bootstrap/
+  * Used https://github.com/pokle/sinatra-bootstrap for Sinatra
 * Jasny Bootstrap
   * Specifically used to pretty up the upload dialog since TB doesn't
 * Ruby FIFO Gem
