@@ -68,3 +68,5 @@ that I think about it, but oh well...
   * https://github.com/shurizzle/ruby-fifo
 * MySQL hash generation
   * https://gist.github.com/1290541
+* Change SublimeText 2 to use RVM instead of system ruby
+  * http://rubenlaguna.com/wp/2012/12/07/sublime-text-2-rvm-rspec-take-2/
