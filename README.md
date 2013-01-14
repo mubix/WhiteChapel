@@ -66,3 +66,5 @@ that I think about it, but oh well...
 * Ruby FIFO Gem
   * Allowing the queuing of entry into Elastic search to be outside of the web interface
   * https://github.com/shurizzle/ruby-fifo
+* MySQL hash generation
+  * https://gist.github.com/1290541

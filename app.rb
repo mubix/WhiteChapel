@@ -1,24 +1,33 @@
 #!/usr/bin/env ruby
 require	'rubygems'
 require 'sinatra'
-require 'haml'
 require 'tire'
 require 'rex'
+require 'fifo'
+
+CRYPT = Rex::Proto::NTLM::Crypt
+
 
 configure do
 	set :public_folder, Proc.new { File.join(root, "static") }
 	set :per_page, 25
 end
 
-def check_unique_and_store(password,hash)
+def check_unique_and_store(password,hash,hashtype)
 	check = Tire.search 'whitechapel-hashes' do |search|
-		search.query { |query| query.string "password:#{password} hash:#{hash}"}
+		search.query { |query| query.string "password:\"#{password}\" hash:#{hash} hashtype:#{hashtype}" }
 	end
 	if check.results.total > 0 then
 		"Not Unique, returning"
 	else
 		"Need to store it as new"
 	end
+end
+
+def generate_hashes(password)
+
+	lm = CRYPT.lm_hash(password).unpack("H*")[0]
+	return lm
 end
 
 helpers do
@@ -48,8 +57,10 @@ helpers do
 				}
 			}
 		}
+		hashforhell = generate_hashes('hello world')
 		document = [
 			{:password => 'hello world', :hash => '5eb63bbbe01eeed093cb22bb8f5acdc3', :hashtype => 'md5', :type => 'document'},
+			{:password => 'hello world', :hash => "#{hashforhell}", :hashtype => 'lm', :type => 'document'},
 			{:password => 'password', :hash => '5f4dcc3b5aa765d61d8327deb882cf99', :hashtype => 'md5', :type => 'document'}
 		]
 
@@ -66,6 +77,10 @@ end
 get '/search/pass' do
 	q = params[:q].to_s !~ /\S/ ? '*' : params[:q].to_s
 	f = params[:p].to_i*settings.per_page
+
+	pipe = Fifo.new('que.fifo', :w, :nowait)
+	puts q
+	pipe.puts "#{q}"
 
 	@s = Tire.search( 'whitechapel-hashes' ) do |search|
 		search.query { |query| query.string "password:\"#{q}\"" }
