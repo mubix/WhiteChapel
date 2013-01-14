@@ -61,5 +61,8 @@ that I think about it, but oh well...
 * Twitter Bootstrap
   * For the prettifying of the interface
   * http://twitter.github.com/bootstrap/
-* https://github.com/shurizzle/ruby-fifo
-** For the FIFO ruby GEM
+* Jasny Bootstrap
+  * Specifically used to pretty up the upload dialog since TB doesn't
+* Ruby FIFO Gem
+  * Allowing the queuing of entry into Elastic search to be outside of the web interface
+  * https://github.com/shurizzle/ruby-fifo
