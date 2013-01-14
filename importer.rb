@@ -27,6 +27,14 @@ def check_unique_and_store(password,hash,hashtype)
 	end
 end
 
+def check_pass(password)
+	check = Tire.search 'whitechapel-hashes' do |search|
+		search.query { |query| query.string "password:\"#{password}\""}
+	end
+	if check.results.total > 0 then
+		return true
+	end
+end
 
 def hash_mysql_password pass
   "*" + Digest::SHA1.hexdigest(Digest::SHA1.digest(pass)).upcase
@@ -36,6 +44,10 @@ loop do
 	pipe = Fifo.new('que.fifo')
 	line = pipe.readline
 	pass = line.chomp
+	if check_pass(pass)
+		puts "Skipping #{pass} - already in db"
+		next
+	end
 	puts pass
 	lm = CRYPT.lm_hash(pass[0..13]).unpack("H*").join
 	ntlm = CRYPT.ntlm_hash(pass).unpack("H*")[0]
