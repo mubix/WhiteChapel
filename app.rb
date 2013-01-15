@@ -4,6 +4,7 @@ require 'sinatra'
 require 'tire'
 require 'rex'
 require 'fifo'
+require 'pry'
 
 CRYPT = Rex::Proto::NTLM::Crypt
 
@@ -57,6 +58,50 @@ helpers do
 		import document
 	end
 =end
+end
+
+def parse_file(filedata)
+	lines = filedata.split("\n") #split out file into separate lines
+	lines.collect! {|x| x.chomp } # deal with Windows' stupid \r\n
+	return lines
+end
+
+def parse_pwdump(lines)
+	results = {}
+	results['found'] = []
+	results['unknown'] = []
+	lines.delete_if {|x| x =~ /^((?!:::).)*$/ }
+	lines.each do |line|
+		parts = line.split(':')
+		if parts.size == 4
+			if parts[2].upcase != 'AAD3B435B51404EEAAD3B435B51404EE' then
+
+				lm = Tire.search( 'whitechapel-hashes' ) do |search|
+					search.query { |query| query.string "hash:#{parts[2]}" }
+				end
+				lm.filter :terms, :hashtype => ["lm"]
+
+				if lm.results.size > 0 then
+					results['found'] << {'username' => parts[0], 'password' => lm.results[0]['password'], 'hash' => parts[2], 'hashtype' => 'lm' }
+				else
+					results['unknown'] << {'username' => parts[0], 'hash' => parts[2], 'hashtype' => 'lm' }
+				end
+			end
+
+			ntlm = Tire.search( 'whitechapel-hashes' ) do |search|
+				search.query { |query| query.string "hash:#{parts[3]}" }
+			end
+			ntlm.filter :terms, :hashtype => ["ntlm"]
+
+			if ntlm.results.size > 0 then
+				results['found'] << {'username' => parts[0], 'password' => ntlm.results[0]['password'], 'hash' => parts[3], 'hashtype' => 'ntlm' }
+			else
+				results['unknown'] << {'username' => parts[0], 'hash' => parts[3], 'hashtype' => 'ntlm' }
+			end
+		end
+	end
+	puts 'Finished parsing pwdump file'
+	return results
 end
 
 get '/' do
@@ -114,8 +159,10 @@ post "/upload/pwdump" do
 		f.write(params['myfile'][:tempfile].read)
 	end
 =end
-	puts params.inspect
-	@tempfile = params['pwdump'][:tempfile].read
+	#pry.params
+	pwdumpoutput = params['pwdump'][:tempfile].read
+	lines = parse_file(pwdumpoutput)
+	@results = parse_pwdump(lines)
 	erb :uploadprocessing
 end
 

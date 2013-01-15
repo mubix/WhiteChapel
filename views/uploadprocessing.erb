@@ -1,3 +1,37 @@
 <div>
-	<%= puts @tempfile.inspect %>
+	<h1>Found Hashes</h1>
+	<table class="table table-condensed">
+	<tr>
+		<th>USERNAME</th>
+		<th>TYPE</th>
+		<th>PASSWORD</th>
+		<th>HASH</th>
+	</tr>
+	<% @results['found'].each do |found| %>
+	<tr>
+		<td><%= found['username'] %></td>
+		<td><%= found['hashtype'] %></td>
+		<td><%= found['password'] %></td>
+		<td><%= found['hash'] %></td>
+	</tr>
+	<% end %>
+	</table>
+</div>
+
+<div>
+	<h1>Unknown Hashes</h1>
+	<table class="table table-condensed">
+	<tr>
+		<th>USERNAME</th>
+		<th>TYPE</th>
+		<th>HASH</th>
+	</tr>
+	<% @results['unknown'].each do |unknown| %>
+	<tr>
+		<td><%= unknown['username'] %></td>
+		<td><%= unknown['hashtype'] %></td>
+		<td><%= unknown['hash'] %></td>
+	</tr>
+	<% end %>
+	</table>
 </div>
