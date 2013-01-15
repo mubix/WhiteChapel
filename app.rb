@@ -113,9 +113,13 @@ get '/search/pass' do
 	q = params[:q].to_s !~ /\S/ ? '*' : params[:q].to_s
 	f = params[:p].to_i*settings.per_page
 
-	pipe = Fifo.new('que.fifo', :w, :nowait)
-	puts q
-	pipe.puts "#{q}"
+	#pipe = Fifo.new('que.fifo', :w, :nowait)
+	#puts q
+	#pipe.puts "#{q}"
+
+	Tire.index 'whitechapel-importque' do
+		store :type => 'word', :word => p
+	end
 
 	@s = Tire.search( 'whitechapel-hashes' ) do |search|
 		search.query { |query| query.string "password:\"#{q}\"" }
@@ -145,10 +149,17 @@ get "/upload" do
 end
 
 post "/upload/dictionary" do
-	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-		f.write(params['myfile'][:tempfile].read)
+	wordlist = []
+	dictionaryfile = params['dictionary'][:tempfile].read
+	lines = parse_file(dictionaryfile)
+	lines.each do |word|
+		wordlist << {:type => 'word', :word => word}
 	end
-	return "The file was successfully uploaded!"
+	Tire.index 'whitechapel-importque' do
+		import wordlist
+	end
+	@error = "File added to import queue.."
+	erb :upload
 end
 
 # Handle POST-request (Receive and save the uploaded file)
