@@ -114,6 +114,7 @@ post "/upload/pwdump" do
 		f.write(params['myfile'][:tempfile].read)
 	end
 =end
+	puts params.inspect
 	@tempfile = params['pwdump'][:tempfile].read
 	erb :uploadprocessing
 end
