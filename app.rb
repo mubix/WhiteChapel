@@ -101,26 +101,28 @@ get "/upload" do
 end
 
 post "/upload/dictionary" do
-  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-	f.write(params['myfile'][:tempfile].read)
-  end
-  return "The file was successfully uploaded!"
+	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+		f.write(params['myfile'][:tempfile].read)
+	end
+	return "The file was successfully uploaded!"
 end
 
 # Handle POST-request (Receive and save the uploaded file)
 post "/upload/pwdump" do
-=begin  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-	f.write(params['myfile'][:tempfile].read)
-  end
+=begin
+	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+		f.write(params['myfile'][:tempfile].read)
+	end
 =end
-  return "The file was successfully uploaded!"
+	@tempfile = params['pwdump'][:tempfile].read
+	return "The file was successfully uploaded!"
 end
 
 post "/upload/shadowfile" do
-  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-	f.write(params['myfile'][:tempfile].read)
-  end
-  return "The file was successfully uploaded!"
+	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+		f.write(params['myfile'][:tempfile].read)
+	end
+	return "The file was successfully uploaded!"
 end
 
 
