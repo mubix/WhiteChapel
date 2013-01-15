@@ -4,7 +4,6 @@ require 'sinatra'
 require 'tire'
 require 'rex'
 require 'fifo'
-require 'pry'
 
 CRYPT = Rex::Proto::NTLM::Crypt
 
