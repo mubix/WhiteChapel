@@ -13,17 +13,6 @@ configure do
 	set :per_page, 25
 end
 
-def check_unique_and_store(password,hash,hashtype)
-	check = Tire.search 'whitechapel-hashes' do |search|
-		search.query { |query| query.string "password:\"#{password}\" hash:#{hash} hashtype:#{hashtype}" }
-	end
-	if check.results.total > 0 then
-		"Not Unique, returning"
-	else
-		"Need to store it as new"
-	end
-end
-
 def generate_hashes(password)
 
 	lm = CRYPT.lm_hash(password).unpack("H*")[0]
@@ -43,8 +32,9 @@ helpers do
 		store :title => 'Two',   :tags => ['ruby', 'python'], :published_on => '2011-01-02'
 		delete
 	end
-
+=begin
 	Tire.index 'whitechapel-hashes' do
+
 		# REMOVE THIS DELETE
 		delete
 
@@ -66,6 +56,7 @@ helpers do
 
 		import document
 	end
+=end
 end
 
 get '/' do
@@ -118,9 +109,10 @@ end
 
 # Handle POST-request (Receive and save the uploaded file)
 post "/upload/pwdump" do
-  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+=begin  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
 	f.write(params['myfile'][:tempfile].read)
   end
+=end
   return "The file was successfully uploaded!"
 end
 

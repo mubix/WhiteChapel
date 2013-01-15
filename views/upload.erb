@@ -9,7 +9,7 @@
 			<form action="/upload/dictionary" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="input-append">
-						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input name="dictionary" type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 					</div>
 					<button type="submit" class="btn">Upload</button>
 				</div>
@@ -19,10 +19,10 @@
 		<div class="span5">
 			<h3>PWDump:</h3>
 			Format = Administrator:500:LMHASH:NTLMHASH:::
-			<form action="/upload/dictionary" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
+			<form action="/upload/pwdump" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="input-append">
-						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input name="pwdump" type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 					</div>
 					<button type="submit" class="btn">Upload</button>
 				</div>
@@ -33,10 +33,10 @@
 		<div class="span5">
 			<h3>Hash list:</h3>
 			Upload a dictionary to be processed and added
-			<form action="/upload/dictionary" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
+			<form action="/upload/hashlist" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="input-append">
-						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input name="hashlist" type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 					</div>
 					<button type="submit" class="btn">Upload</button>
 				</div>
@@ -46,10 +46,10 @@
 		<div class="span5">
 			<h3>Shadow File:</h3>
 			Format = Administrator:500:LMHASH:NTLMHASH:::
-			<form action="/upload/dictionary" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
+			<form action="/upload/shadowfile" method="post" accept-charset="utf-8" enctype='multipart/form-data' >
 				<div class="fileupload fileupload-new" data-provides="fileupload">
 					<div class="input-append">
-						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input name="shadow" type="file" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 					</div>
 					<button type="submit" class="btn">Upload</button>
 				</div>
