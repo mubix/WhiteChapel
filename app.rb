@@ -115,7 +115,7 @@ post "/upload/pwdump" do
 	end
 =end
 	@tempfile = params['pwdump'][:tempfile].read
-	return "The file was successfully uploaded!"
+	erb :uploadprocessing
 end
 
 post "/upload/shadowfile" do
