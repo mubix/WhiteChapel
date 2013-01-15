@@ -57,6 +57,9 @@ loop do
 			puts "Skipping #{pass} - already in db"
 			next
 		end
+		if pass == nil
+			next
+		end
 		puts pass
 		lm = CRYPT.lm_hash(pass[0..13]).unpack("H*").join
 		ntlm = CRYPT.ntlm_hash(pass).unpack("H*")[0]
