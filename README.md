@@ -27,7 +27,7 @@ elastic search up.
 
 Elastic Search doesn't have to run on the same machine as you
 are running WhiteChapel. Just make a config file called 'elastic.conf'
-copying the exmaple provided (elastic-example.conf) with the URL.
+copying the example provided (elastic-example.conf) with the URL.
 Usually ```http://127.0.0.1:9200/``` if you are running ES locally.
 
 Elastic Search has custering built into it and running another
