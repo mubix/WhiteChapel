@@ -30,6 +30,10 @@ are running WhiteChapel. Just make a config file called 'elastic.conf'
 copying the exmaple provided (elastic-example.conf) with the URL.
 Usually ```http://127.0.0.1:9200/``` if you are running ES locally.
 
+Elastic Search has custering built into it and running another
+elastic search server on another system in the same broadcast area
+will automatically join the cluster and decrease the load.
+
 ### Redis Server for Queue management
 
 You can download it here: http://redis.io/download
@@ -44,6 +48,9 @@ of passwords and have the server not flinch at 100MB files
 (obviously the upload might take a minute but the DB will
 process it VERY fast)
 
+You can have more than one queue (redis) server if you want
+as pretty much every action is compartmentalized.
+
 
 ## Installation::
 
@@ -51,9 +58,32 @@ process it VERY fast)
 * cd WhiteChapel
 * bundle install
 
+### Starting workers
+
+You can start additional "workers" to handle the password
+import processing (usually only an issue when importing be wordlists)
+by issusing the following command
+```
+QUEUE='*' rake resque:work
+```
+from inside the WhiteChapel directory.
+
 ## Execution::
 
 * foreman start
+
+
+## Importing Dictionaries from the Command Line
+
+For most cases file upload via the web interface is adding
+a hurdle (HTTP upload) that doesn't need to be there. So
+running the ruby file "dictionaryimport_cli.rb" from whithin
+the WhiteChapel directory will directly import the wordlist into
+the password processing queue.
+```
+./dictionaryimport_cli.rb /path/to/wordlist/rockyou.txt
+```
+Should simply output how many lines it imported when it's done.
 
 ## Todo List::
 
