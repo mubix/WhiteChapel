@@ -15,6 +15,8 @@ searched password, uploaded dictionaries, and cracked hashes
 
 ## Pre-Installation
 
+### Elastic Search
+
 WhiteChapel requires you to have ElasticSearch running.
 
 You can download it here: http://www.elasticsearch.org/download/
@@ -28,6 +30,21 @@ are running WhiteChapel. Just make a config file called 'elastic.conf'
 copying the exmaple provided (elastic-example.conf) with the URL.
 Usually ```http://127.0.0.1:9200/``` if you are running ES locally.
 
+### Redis Server for Queue management
+
+You can download it here: http://redis.io/download
+
+Most package managers (apt-get/yum/OSX ports/brew) have redis server
+as a package and it's really easy to get set up. There is also
+as Redis IP/PORT configuation in the Rakefile if you want to run
+Redis on another server.
+
+This makes it seemless to upload dictionaries worth
+of passwords and have the server not flinch at 100MB files
+(obviously the upload might take a minute but the DB will
+process it VERY fast)
+
+
 ## Installation::
 
 * git clone https://github.com/mubix/WhiteChapel.git
@@ -36,7 +53,7 @@ Usually ```http://127.0.0.1:9200/``` if you are running ES locally.
 
 ## Execution::
 
-* ruby app.rb
+* foreman start
 
 ## Todo List::
 
@@ -78,9 +95,6 @@ that I think about it, but oh well...
   * Used https://github.com/pokle/sinatra-bootstrap for Sinatra
 * Jasny Bootstrap
   * Specifically used to pretty up the upload dialog since TB doesn't
-* Ruby FIFO Gem
-  * Allowing the queuing of entry into Elastic search to be outside of the web interface
-  * https://github.com/shurizzle/ruby-fifo
 * MySQL hash generation
   * https://gist.github.com/1290541
 * Change SublimeText 2 to use RVM instead of system ruby

@@ -1,12 +1,16 @@
 #!/usr/bin/env ruby
+
+require 'bundler/setup'
+Bundler.require(:default)
+
 require	'rubygems'
 require 'sinatra'
 require 'tire'
 require 'rex'
-require 'fifo'
+require 'resque/server'
+require './importer'
 
 CRYPT = Rex::Proto::NTLM::Crypt
-
 
 configure do
 	set :public_folder, Proc.new { File.join(root, "static") }
@@ -32,11 +36,11 @@ helpers do
 		store :title => 'Two',   :tags => ['ruby', 'python'], :published_on => '2011-01-02'
 		delete
 	end
-=begin
+
 	Tire.index 'whitechapel-hashes' do
 
 		# REMOVE THIS DELETE
-		delete
+		#delete
 
 		create :mappings => {
 			:document => {
@@ -47,6 +51,7 @@ helpers do
 				}
 			}
 		}
+=begin
 		hashforhell = generate_hashes('hello world')
 		document = [
 			{:password => 'hello world', :hash => '5eb63bbbe01eeed093cb22bb8f5acdc3', :hashtype => 'md5', :type => 'document'},
@@ -55,9 +60,10 @@ helpers do
 		]
 
 		import document
-	end
 =end
+	end
 end
+
 
 def parse_file(filedata)
 	lines = filedata.split("\n") #split out file into separate lines
@@ -117,9 +123,7 @@ get '/search/pass' do
 	#puts q
 	#pipe.puts "#{q}"
 
-	Tire.index 'whitechapel-importque' do
-		store :type => 'word', :word => p
-	end
+	Resque.enqueue(EnqueuePasswords, q)
 
 	@s = Tire.search( 'whitechapel-hashes' ) do |search|
 		search.query { |query| query.string "password:\"#{q}\"" }
@@ -153,10 +157,7 @@ post "/upload/dictionary" do
 	dictionaryfile = params['dictionary'][:tempfile].read
 	lines = parse_file(dictionaryfile)
 	lines.each do |word|
-		wordlist << {:type => 'word', :word => word}
-	end
-	Tire.index 'whitechapel-importque' do
-		import wordlist
+		Resque.enqueue(EnqueuePasswords, word)
 	end
 	@error = "File added to import queue.."
 	erb :upload

@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'fifo'
+require 'bundler/setup'
+Bundler.require(:default)
+
 require 'rex'
 require 'tire'
 require 'rex/proto/ntlm/crypt'
@@ -23,7 +25,7 @@ def check_unique_and_store(password,hash,hashtype)
 	if check.results.total > 0 then
 		return
 	else
-		@toinput << {:password => password, :hash => hash, :hashtype => hashtype, :type => 'document'}
+		return {:password => password, :hash => hash, :hashtype => hashtype, :type => 'document'}
 	end
 end
 
@@ -40,27 +42,19 @@ def hash_mysql_password pass
   "*" + Digest::SHA1.hexdigest(Digest::SHA1.digest(pass)).upcase
 end
 
-loop do
-	@toinput = []
-	# pipe = Fifo.new('que.fifo')
-	# line = pipe.readline
-	que = Tire.search 'whitechapel-importque' do
-		query do
-			string 'type:word'
-		end
-	end
 
-	que.results.each do |line|
-		pass = line['word']
-		#pass = line.chomp
-		if check_pass(pass)
-			puts "Skipping #{pass} - already in db"
-			next
-		end
-		if pass == nil
-			next
-		end
+# Resque queueing code
+module EnqueuePasswords
+	@queue = :passque
+
+	def self.perform(pass)
 		puts pass
+
+		if check_pass(pass)
+			puts 'Password already in DB'
+			return
+		end
+
 		lm = CRYPT.lm_hash(pass[0..13]).unpack("H*").join
 		ntlm = CRYPT.ntlm_hash(pass).unpack("H*")[0]
 		md5 = Digest::MD5.hexdigest(pass)
@@ -77,13 +71,17 @@ loop do
 		puts "SHA512: #{sha512}"
 		puts "MYSQL: #{mysql}"
 
-
-		check_unique_and_store(pass, lm, 'lm')
-		check_unique_and_store(pass, ntlm, 'ntlm')
-		check_unique_and_store(pass, md5, 'md5')
-		check_unique_and_store(pass, sha1, 'sha1')
-		check_unique_and_store(pass, sha256, 'sha256')
-		check_unique_and_store(pass, sha512, 'sha512')
-		check_unique_and_store(pass, mysql, 'mysql')
+		Tire.index 'whitechapel-hashes' do
+			@toinput = []
+			@toinput << check_unique_and_store(pass, lm, 'lm')
+			@toinput << check_unique_and_store(pass, ntlm, 'ntlm')
+			@toinput << check_unique_and_store(pass, md5, 'md5')
+			@toinput << check_unique_and_store(pass, sha1, 'sha1')
+			@toinput << check_unique_and_store(pass, sha256, 'sha256')
+			@toinput << check_unique_and_store(pass, sha512, 'sha512')
+			@toinput << check_unique_and_store(pass, mysql, 'mysql')
+			@toinput.compact!
+			import @toinput
+		end
 	end
 end

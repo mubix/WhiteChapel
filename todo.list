@@ -1,6 +1,3 @@
-Search goes here
-Upload dump for mass searching goes here
-planned support (pwdump format, /etc/shadow format, and per-lin)
-Upload dictionary for mass add goes here
+planned support (pwdump format, /etc/shadow format, and per-line)
 Que for cracking (passwords get auto-added to db)
 Start and stop John auto word generator

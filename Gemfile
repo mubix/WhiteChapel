@@ -17,3 +17,6 @@ gem "ruby-fifo"
 gem "rerun"
 gem 'rb-fsevent', '~> 0.9.1'
 
+gem 'foreman'
+
+gem 'resque'

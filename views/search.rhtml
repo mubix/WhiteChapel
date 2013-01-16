@@ -21,6 +21,7 @@
 </div>
 <br>
 <br>
+
 <table class="table table-condensed">
 	<tr>
 		<th>TYPE</th>
@@ -44,6 +45,8 @@
 
 <% if @s.results.empty? %>
 	<p>No results.</p>
+<% else %>
+	<h4> Total Results: <%= @s.results.total %></h4>
 <% end %>
 
 </body>
