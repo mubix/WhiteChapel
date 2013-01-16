@@ -13,6 +13,15 @@ outside of the items stipulated here)
 4. Generate hash tables for all popular hash types based on
 searched password, uploaded dictionaries, and cracked hashes
 
+## Pre-Installation
+
+WhiteChapel requires you to have ElasticSearch running.
+
+You can download it here: http://www.elasticsearch.org/download/
+
+Once you have it downloaded, if you are using the tar, just 'cd'
+into the bin directory and do a ```./elasticsearch -f ``` to start
+elastic search up.
 
 ## Installation::
 
