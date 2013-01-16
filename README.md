@@ -64,7 +64,7 @@ You can start additional "workers" to handle the password
 import processing (usually only an issue when importing be wordlists)
 by issusing the following command
 ```
-QUEUE='*' rake resque:work
+TERM_CHILD=1 QUEUE='*' rake resque:work
 ```
 from inside the WhiteChapel directory.
 
