@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+#encoding: UTF-8
 
 require 'bundler/setup'
 Bundler.require(:default)
@@ -157,7 +158,7 @@ post "/upload/dictionary" do
 	dictionaryfile = params['dictionary'][:tempfile].read
 	lines = parse_file(dictionaryfile)
 	lines.each do |word|
-		Resque.enqueue(EnqueuePasswords, word)
+		Resque.enqueue(EnqueuePasswords, word.force_encoding('UTF-8'))
 	end
 	@error = "File added to import queue.."
 	erb :upload
