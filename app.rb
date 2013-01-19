@@ -166,12 +166,6 @@ end
 
 # Handle POST-request (Receive and save the uploaded file)
 post "/upload/pwdump" do
-=begin
-	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-		f.write(params['myfile'][:tempfile].read)
-	end
-=end
-	#pry.params
 	pwdumpoutput = params['pwdump'][:tempfile].read
 	lines = parse_file(pwdumpoutput)
 	@results = parse_pwdump(lines)
@@ -179,10 +173,9 @@ post "/upload/pwdump" do
 end
 
 post "/upload/shadowfile" do
-	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-		f.write(params['myfile'][:tempfile].read)
-	end
-	return "The file was successfully uploaded!"
+
+	@error = "Feature not finished yet..."
+	erb :upload
 end
 
 
