@@ -68,6 +68,11 @@ TERM_CHILD=1 QUEUE='*' rake resque:work
 ```
 from inside the WhiteChapel directory.
 
+You can also start multiple workers at once as so:
+```
+COUNT=25 TERM_CHILD=1 QUEUE='*' rake resque:workers
+```
+
 ## Execution::
 
 * foreman start
