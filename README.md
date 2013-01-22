@@ -34,6 +34,17 @@ Elastic Search has custering built into it and running another
 elastic search server on another system in the same broadcast area
 will automatically join the cluster and decrease the load.
 
+#### Elastic Search on OSX
+
+Thanks to @mandreko here is how you install ES on OSX w/ Brew:
+```
+brew install elasticsearch
+```
+Then to get it to launch at startup:
+```
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
+```
+
 ### Redis Server for Queue management
 
 You can download it here: http://redis.io/download
