@@ -72,7 +72,7 @@ as pretty much every action is compartmentalized.
 ### Starting workers
 
 You can start additional "workers" to handle the password
-import processing (usually only an issue when importing be wordlists)
+import processing (usually only an issue when importing big wordlists)
 by issusing the following command
 ```
 TERM_CHILD=1 QUEUE='*' rake resque:work

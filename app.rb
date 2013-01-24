@@ -40,28 +40,16 @@ helpers do
 
 	Tire.index 'whitechapel-hashes' do
 
-		# REMOVE THIS DELETE
-		#delete
-
 		create :mappings => {
 			:document => {
 			  :properties => {
 					:password  => { :type => 'string', :index => 'not_analyzed', :include_in_all => false },
 					:hash      => { :type => 'string', :analyzer => 'snowball'  },
-					:type     => { :type => 'string'}
+					:type      => { :type => 'string'},
+					:hashtype  => { :type => 'string'}
 				}
 			}
 		}
-=begin
-		hashforhell = generate_hashes('hello world')
-		document = [
-			{:password => 'hello world', :hash => '5eb63bbbe01eeed093cb22bb8f5acdc3', :hashtype => 'md5', :type => 'document'},
-			{:password => 'hello world', :hash => "#{hashforhell}", :hashtype => 'lm', :type => 'document'},
-			{:password => 'password', :hash => '5f4dcc3b5aa765d61d8327deb882cf99', :hashtype => 'md5', :type => 'document'}
-		]
-
-		import document
-=end
 	end
 end
 
@@ -111,18 +99,12 @@ def parse_pwdump(lines)
 end
 
 get '/' do
-	# puts @s.to_curl
-
 	erb :index
 end
 
 get '/search/pass' do
 	q = params[:q].to_s !~ /\S/ ? '*' : params[:q].to_s
 	f = params[:p].to_i*settings.per_page
-
-	#pipe = Fifo.new('que.fifo', :w, :nowait)
-	#puts q
-	#pipe.puts "#{q}"
 
 	Resque.enqueue(EnqueuePasswords, q)
 
@@ -154,12 +136,22 @@ get "/upload" do
 end
 
 post "/upload/dictionary" do
+	response['Connection'] = 'close'
 	wordlist = []
-	dictionaryfile = params['dictionary'][:tempfile].read
-	lines = parse_file(dictionaryfile)
-	lines.each do |word|
-		Resque.enqueue(EnqueuePasswords, word.force_encoding('UTF-8'))
+	counter = 0
+	queue = []
+	dictionaryfile = params['dictionary'][:tempfile].read.split("\n")
+
+	dictionaryfile.each do |x|
+		queue << "#{x.chomp.force_encoding('UTF-8')}"
+		if counter == 1000 then
+			Resque.enqueue(EnqueueBulk, queue)
+			counter = 0
+			queue = []
+		end
+		counter += 1
 	end
+	Resque.enqueue(EnqueueBulk, queue)
 	@error = "File added to import queue.."
 	erb :upload
 end
@@ -172,6 +164,8 @@ post "/upload/pwdump" do
 	erb :uploadprocessing
 end
 
+post ""
+
 post "/upload/shadowfile" do
 
 	@error = "Feature not finished yet..."
@@ -179,7 +173,10 @@ post "/upload/shadowfile" do
 end
 
 
-
+get "/*" do
+	@error = 'You h'
+	erb :search
+end
 
 
 

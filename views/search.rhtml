@@ -39,7 +39,7 @@
 
 <% if @s.results.total > (params[:p].to_i+1)*settings.per_page %>
 	<p>
-		<a href="/?q=<%= params[:q] %>&amp;s=<%= params[:s] %>&amp;p=<%= params[:p].to_i+1 %>">Next &raquo;</a>
+		<a href="/search/pass?q=<%= params[:q] %>&amp;s=<%= params[:s] %>&amp;p=<%= params[:p].to_i+1 %>">Next &raquo;</a>
 	</p>
 <% end %>
 
