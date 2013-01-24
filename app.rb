@@ -11,17 +11,9 @@ require 'rex'
 require 'resque/server'
 require './importer'
 
-CRYPT = Rex::Proto::NTLM::Crypt
-
 configure do
 	set :public_folder, Proc.new { File.join(root, "static") }
 	set :per_page, 25
-end
-
-def generate_hashes(password)
-
-	lm = CRYPT.lm_hash(password).unpack("H*")[0]
-	return lm
 end
 
 helpers do
@@ -164,7 +156,10 @@ post "/upload/pwdump" do
 	erb :uploadprocessing
 end
 
-post ""
+post "/upload/hashlist" do
+	@error = "Feature not finished yet..."
+	erb :upload
+end
 
 post "/upload/shadowfile" do
 
@@ -172,13 +167,10 @@ post "/upload/shadowfile" do
 	erb :upload
 end
 
-
 get "/*" do
-	@error = 'You h'
-	erb :search
+	@error = '404'
+	erb :index
 end
-
-
 
 
 # john ./johnfile.txt --show=LEFT --format=NT
