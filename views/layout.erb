@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<title>White Chapel - Password Auditing Framework</title>
+    <title>White Chapel - Password Auditing Framework</title>
     <script src="/lib/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <script src="/lib/jquery.tablesorter.min.js" type="text/javascript"></script>
     <script src="/lib/bootstrap/js/jasny-bootstrap.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
@@ -26,13 +27,12 @@
       </div>
     </div>
 
-
-	<div class="container">
-		<%if @error then %>
-			<div class="alert alert-error"><%=@error%></div>
-		<% end %>
-    	<%= yield %>
-	</div>
+  <div class="container">
+    <%if @error then %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+      <%= yield %>
+  </div>
   </body>
 </html>
 
