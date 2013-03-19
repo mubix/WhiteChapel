@@ -22,12 +22,15 @@
 <br>
 <br>
 
-<table class="table table-condensed">
+<table id="table" class="table table-condensed tablesorter">
+	<thead>
 	<tr>
 		<th>TYPE</th>
 		<th>PASSWORD</th>
 		<th>HASH</th>
 	</tr>
+</thead>
+<tbody>
 	<% @s.results.each do |m| %>
 	<tr>
 		<td><%= m['hashtype'] %></td>
@@ -35,7 +38,16 @@
 		<td><%= m['hash'] %></td>
 	</tr>
 <% end %>
+</tbody>
 </table>
+
+<script type="text/javascript" id="js"> 
+$(document).ready(function() 
+    { 
+        $("#table").tablesorter({sortList: [[0,0], [1,0]]}); 
+    } 
+);
+</script>
 
 <% if @s.results.total > (params[:p].to_i+1)*settings.per_page %>
 	<p>
