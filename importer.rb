@@ -109,7 +109,7 @@ module EnqueuePasswords
 			hashes.each do |type,hashhash|
 				@inputone << check_unique(hashhash)
 			end
-			inputone.compact!
+			@inputone.compact!
 			import @inputone
 		end
 	end
