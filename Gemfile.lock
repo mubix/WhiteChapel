@@ -16,8 +16,8 @@ GEM
     listen (0.7.2)
     mime-types (1.19)
     multi_json (1.5.0)
-    rack (1.4.4)
-    rack-protection (1.3.2)
+    rack (1.6.13)
+    rack-protection (1.5.5)
       rack
     rake (10.0.3)
     rb-fsevent (0.9.3)
